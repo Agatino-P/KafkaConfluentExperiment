@@ -39,27 +39,27 @@ public class KafkaSeeker : IDisposable
         _consumer.Subscribe(topic);
     }
 
-    public bool Seek(string keyTobeFound, out ConsumeResult<string, string>? foundOne)
+    public string? Seek(string keyTobeFound)
     {
-
+        _logger.LogInformation("SeekerCalled");
         try
         {
-            ConsumeResult<string, string> result = _consumer.Consume(TimeSpan.FromSeconds(10));
+            ConsumeResult<string, string> result = _consumer.Consume(TimeSpan.FromSeconds(1));
 
-            if ( result?.Message.Key == keyTobeFound)
+            if (result?.Message?.Key != null)
             {
-                foundOne = result;
-                return true;
 
+                if (result.Message.Key == keyTobeFound)
+                {
+                    return result.Message.Value;
+                }
             }
         }
         catch (Exception ex)
         {
             _logger.LogError(ex.Message);
-
         }
-        foundOne = null;
-        return false;
+        return null;
     }
 
     protected virtual void Dispose(bool disposing)

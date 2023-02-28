@@ -2,6 +2,9 @@
 using KafkaConfluentExperiment;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Polly;
+using Polly.CircuitBreaker;
+using Polly.Retry;
 using Serilog;
 
 internal class Program
@@ -39,14 +42,24 @@ internal class Program
 
         KafkaSeeker kafkaSeeker = host.Services.GetRequiredService<KafkaSeeker>();
 
-        while (true)
-        {
-            if (kafkaSeeker.Seek("ASpecificKey", out ConsumeResult<string, string> result))
-            {
-                Console.WriteLine($"{result.Key}: {result.Value}");
+        RetryPolicy<string?> retryOnNullPolicy = Policy
+            .HandleResult<string?>(r => r == null)
+            .WaitAndRetry(3, retryAttempt =>
+            TimeSpan.FromSeconds(Math.Pow(2, retryAttempt-1)) );
 
+        //while (true)
+        //{
+            string? res = retryOnNullPolicy.Execute(() => kafkaSeeker.Seek("ASpecificKey"));
+            if (res != null)
+            {
+                Console.WriteLine($"Found: {res}");
             }
-        }
+            else
+            {
+                Console.WriteLine("Not Found");
+            }
+
+        //}
 
 
 

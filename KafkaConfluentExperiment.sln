@@ -3,7 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KafkaConfluentExperiment", "KafkaConfluentExperiment\KafkaConfluentExperiment.csproj", "{41DA91E6-F48A-4426-941B-A36D9BC60A07}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KafkaConfluentExperiment", "KafkaConfluentExperiment\KafkaConfluentExperiment.csproj", "{41DA91E6-F48A-4426-941B-A36D9BC60A07}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DockerCompose", "DockerCompose", "{519C790F-E3B2-450A-89AD-23B9705324EC}"
+	ProjectSection(SolutionItems) = preProject
+		DockerCompose\docker-compose.yml = DockerCompose\docker-compose.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{7756DDC2-AE50-4A34-8E23-C093BEB94EA0}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		DockerCompose\docker-compose.yml = DockerCompose\docker-compose.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,6 +29,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{519C790F-E3B2-450A-89AD-23B9705324EC} = {7756DDC2-AE50-4A34-8E23-C093BEB94EA0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8253105D-1EE7-4B11-BA42-FDE3B00BD0CD}
